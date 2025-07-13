@@ -4,6 +4,8 @@ const express = require("express")
 //the object app got a bunch of useful methods like get(), put(), post(), delete()
 const app = express()
 
+app.use(express.json())
+
 const courses = [
     {id: 1, name: "course 1"},
     {id: 2, name: "course 2"},
@@ -19,6 +21,18 @@ app.get('/', (req, res) => {
 app.get('/api/courses', (req, res) => {
     res.send(courses)
 })
+
+app.post('/api/courses', (req, res) => {
+    // creating a course object, note that here we working manually without a database
+    const course = {
+        id: courses.length + 1,
+        name: req.body.name
+    }
+    // pushing the new object in the array courses
+    courses.push(course)
+    //returning the object in the body of the response, by convention it should always be this wa
+    res.send(course)
+}) 
 
 //defining a route to get a specific course with its id
 app.get('/api/courses/:id', (req, res) => {
