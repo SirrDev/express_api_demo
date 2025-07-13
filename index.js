@@ -26,16 +26,12 @@ app.get('/api/courses', (req, res) => {
 
 app.post('/api/courses', (req, res) => {
     /*deining a schema wich define the shape of our object like the properties we gonna have in it, theirs types, the min or max number of characters, do we have emails or stings etc...*/
-    const schema = {
-        name: Joi.string().min(3).required()
-    }
+   const { error } = validateCourse(req.body) //result.error
 
-    //calling joi
-    const result = Joi.valid(req.body, schema)
-    //logging the result
-    if(result.error){
+    //if invalid, return 400 - Bad Request
+    if(error){
         // 400 Bad Request
-        res.status(400).send(result.error.details[0].message)
+        res.status(400).send(error.details[0].message)
         return
     }
 
@@ -50,15 +46,44 @@ app.post('/api/courses', (req, res) => {
     res.send(course)
 }) 
 
+app.put('/api/courses/:id', (req, res) => {
+    //look up the course, if not exist, return 404
+     const course = courses.find(c => c.id === parseInt(req.params.id))
+    if(!course) res.status(404).send('The course with the given ID was not found.')
+
+    //validate
+    /*check the function validateCourse*/
+    const { error } = validateCourse(req.body) //result.error
+
+    //if invalid, return 400 - Bad Request
+    if(error){
+        // 400 Bad Request
+        res.status(400).send(error.details[0].message)
+        return
+    }
+
+    //update the course
+    course.name = req.body.name
+    //return the updated course
+    res.send(course)
+})
+
 //defining a route to get a specific course with its id
 app.get('/api/courses/:id', (req, res) => {
     //to read the parameter id, we use the req object
-    /*using query string parameters with query, it's for optional parameter that are not essential # raw params, ex:?sortedBy=name
-    const course = courses.find(c => c.id === parseInt(req.params.id))*/
+    /*using query string parameters with query, it's for optional parameter that are not essential # raw params, ex:?sortedBy=name*/
+    const course = courses.find(c => c.id === parseInt(req.params.id))
     if(!course) res.status(404).send('The course with the given ID was not found.')
     res.send(course)
 
 })
+
+function validateCourse(course) {
+    const schema = {
+        name: Joi.string().min(3).required()
+    }
+    return Joi.valid(course, schema)
+}
 
 /*PORT is an environment variable which tell on wich port a process run. that what we gonna use here instead of fixing the port with the value 3000*/
 const port = process.env.PORT || 3000
