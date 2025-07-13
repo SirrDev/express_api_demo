@@ -2,3 +2,6 @@
 npm i -g nodemon
 //to run the app 
 nodemon index.js
+//stting an environment variable
+on MAC: export PORT=5000
+on window: set PORT=5000

@@ -14,4 +14,6 @@ app.get('/api/courses', (req, res) => {
     res.send([1,2,3])
 })
 
-app.listen(3000, () => {console.log('Listening on port 3000...')})
+//PORT is an environment variable which tell on wich port a process run. that what we gonna use here instead of fixing the port with the value 3000
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log(`Listening on port ${port}...`))
