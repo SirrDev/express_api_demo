@@ -1,0 +1,4 @@
+//installing nodemon
+npm i -g nodemon
+//to run the app 
+nodemon index.js
