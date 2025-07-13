@@ -17,7 +17,8 @@ app.get('/api/courses', (req, res) => {
 //defining a route to get a specific course with its id
 app.get('/api/courses/:year/:month', (req, res) => {
     //to read the parameter id, we use the req object
-    res.send(req.params)
+    //using query string parameters with query, it's for optional parameter that are not essential # raw params, ex:?sortedBy=name
+    res.send(req.query)
 })
 
 //PORT is an environment variable which tell on wich port a process run. that what we gonna use here instead of fixing the port with the value 3000
