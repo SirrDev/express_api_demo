@@ -10,3 +10,5 @@ on window: set PORT=5000
     {
     "name": "new course"
     }
+//download the joi package for input validation
+npm i joi
