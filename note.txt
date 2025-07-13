@@ -5,3 +5,8 @@ nodemon index.js
 //stting an environment variable
 on MAC: export PORT=5000
 on window: set PORT=5000
+//teting the api with postman
+1st http post request :
+    {
+    "name": "new course"
+    }

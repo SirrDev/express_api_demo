@@ -30,7 +30,7 @@ app.post('/api/courses', (req, res) => {
     }
     // pushing the new object in the array courses
     courses.push(course)
-    //returning the object in the body of the response, by convention it should always be this wa
+    //returning the object in the body of the response, by convention it should always be this way
     res.send(course)
 }) 
 
