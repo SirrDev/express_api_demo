@@ -68,6 +68,20 @@ app.put('/api/courses/:id', (req, res) => {
     res.send(course)
 })
 
+app.delete('/api/courses/:id', (req, res) => {
+    //look up the course
+    const course = courses.find(c => c.id === parseInt(req.params.id))
+    if(!course) res.status(404).send('The course with the given ID was not found')
+
+        //delete
+        courses.indexOf(course)
+        courses.splice(index, 1)
+
+        //return the same course that we deleted
+        res.send(course)
+
+})
+
 //defining a route to get a specific course with its id
 app.get('/api/courses/:id', (req, res) => {
     //to read the parameter id, we use the req object
