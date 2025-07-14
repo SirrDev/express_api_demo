@@ -49,7 +49,10 @@ app.post('/api/courses', (req, res) => {
 app.put('/api/courses/:id', (req, res) => {
     //look up the course, if not exist, return 404
      const course = courses.find(c => c.id === parseInt(req.params.id))
-    if(!course) res.status(404).send('The course with the given ID was not found.')
+    if(!course) {
+        res.status(404).send('The course with the given ID was not found.')
+        return
+    }
 
     //validate
     /*check the function validateCourse*/
@@ -71,7 +74,7 @@ app.put('/api/courses/:id', (req, res) => {
 app.delete('/api/courses/:id', (req, res) => {
     //look up the course
     const course = courses.find(c => c.id === parseInt(req.params.id))
-    if(!course) res.status(404).send('The course with the given ID was not found')
+    if(!course) return res.status(404).send('The course with the given ID was not found')
 
         //delete
         courses.indexOf(course)
@@ -87,7 +90,8 @@ app.get('/api/courses/:id', (req, res) => {
     //to read the parameter id, we use the req object
     /*using query string parameters with query, it's for optional parameter that are not essential # raw params, ex:?sortedBy=name*/
     const course = courses.find(c => c.id === parseInt(req.params.id))
-    if(!course) res.status(404).send('The course with the given ID was not found.')
+    if(!course) return res.status(404).send('The course with the given ID was not found.')
+        
     res.send(course)
 
 })
